@@ -1,0 +1,3 @@
+@ECHO off
+echo.
+ls

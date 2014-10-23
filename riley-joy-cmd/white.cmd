@@ -1,0 +1,2 @@
+@ECHO Off
+COLOR F0
