@@ -1,0 +1,10 @@
+{
+  "name": "welcome",
+  "description": "Fun welcome prompt",
+  "version": "0.1.0",
+  "dependencies": {
+    "commander": "2.4.0",
+    "prompt": "0.2.14",
+    "colors": "1.0.3"
+  }
+}
