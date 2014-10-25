@@ -1,54 +1,83 @@
 /* jshint undef: true, unused: true, strict: true, devel: true */
-/* global prompt, program, require, welcome, asciiArt */
+/* global require */
 
 var prompt = require('prompt');
-//var program = require('commander');
 
 prompt.message = "";
 prompt.delimiter = "";
 prompt.start();
 
-var welcome = {
-	_childName : 'Riley Joy',
-	_password : 'barn',
-	passwordPrompt : function() {
-		console.log(' ');
-		console.log('Please enter your secret password.'.magenta.bold);
-		console.log(' ');
-		prompt.get({
-			name:'password',
-			description:'>'.red.bold
-			}, function (err, result) {
-				welcome.checkPassword(result.password);
+var Welcome = {
+	_name : 'name',
+	_password : 'password',
+	create : function (data) {
+		'use strict';
+		return Object.create(Welcome).init(data);
+	},
+	init : function(data) {
+		'use strict';
+		this._name = data.name;
+		this._password = data.password;
+		return this;
+	},
+	name : function() {
+    'use strict';
+		return this._name;
+	},
+	password : function() {
+    'use strict';
+		return this._password;
+	}
+};
+var welcome = Welcome.create({
+	name : 'Riley Joy',
+	password : 'barn'
+});
+	
+var passwordPrompt = function() {
+  'use strict';
+	console.log(' ');
+	console.log('Please enter your secret password.'.magenta.bold);
+	console.log(' ');
+	prompt.get({
+		name:'password',
+		description:'>'.red.bold
+		}, function (err, result) {
+			if (result.password === welcome.password()) {
+				asciiArt.drawRandom();
+				console.log('Hi,'.magenta.bold,welcome.name().magenta.bold + '!'.magenta.bold);
+			} else {
+				passwordPrompt();
 			}
-		);
-	},
-	checkPassword : function (password) {
-		if (password === this._password) {
-			this.drawAsciiArt();
-			console.log('Hi,'.magenta.bold,this._childName.magenta.bold + '!'.magenta.bold);
-		} else {
-			this.passwordPrompt();
 		}
+	);
+};
+
+var asciiArt = {
+	_list : [],
+	add : function(art) {
+    'use strict';
+		this._list.push(art);
 	},
-	getRandomAsciiArt : function (){
-		var max = asciiArt.length;
-		return Math.floor(Math.random()*(max) + 1) - 1;
+	drawRandom : function() {
+    'use strict';
+		var last = this._list.length;
+		var random = Math.floor(Math.random()*(last) + 1) - 1;
+		var art = this._list[random];
+		this.draw(art);
 	},
-	drawAsciiArt : function () {
+	draw : function(artArray) {
+    'use strict';
 		var i;
-		var art = asciiArt[this.getRandomAsciiArt()];
-		for (i = 0; i < art.length; i = i + 1) {
-			console.log(art[i].yellow.bold);
+		for (i = 0; i < artArray.length; i = i + 1) {
+			console.log(artArray[i].yellow.bold);
 		}
 	}
 };
-
-var asciiArt = [];
-asciiArt.push([
+asciiArt.add([
 //	' ',
 	'                 _______	',
-	'               _/       \\\_',
+	'               _/       \\_',
 	'              / |       | \\',
 	'             /  |__   __|  \\',
 	'            |__/((o| |o))\\__|',
@@ -63,5 +92,27 @@ asciiArt.push([
 	'          /                   \\ ',
 	' '
 	]);
+asciiArt.add([
+	'		____________________________',
+	'		!\\_________________________/!\\',
+	'		!!                         !! \\',
+	'		!!                         !!  \\',
+	'		!!                         !!  !',
+	'		!!                         !!  !',
+	'		!!                         !!  !',
+	'		!!                         !!  !',
+	'		!!                         !!  !',
+	'		!!                         !!  /',
+	'		!!_________________________!! /',
+	'		!/_________________________\\!/',
+	'		   __\\_________________/__/!_',
+	'		  !_______________________!/',
+	'		________________________',
+	'	   /oooo  oooo  oooo  oooo /!',
+	'	  /ooooooooooooooooooooooo/ /',
+	'	 /ooooooooooooooooooooooo/ /',
+	'	/C=_____________________/_/',
+	'	' 
+	]);
 
-welcome.passwordPrompt();
+passwordPrompt();
