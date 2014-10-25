@@ -3,10 +3,6 @@
 
 var prompt = require('prompt');
 
-prompt.message = "";
-prompt.delimiter = "";
-prompt.start();
-
 var Welcome = {
 	_name : 'name',
 	_password : 'password',
@@ -29,6 +25,7 @@ var Welcome = {
 		return this._password;
 	}
 };
+
 var welcome = Welcome.create({
 	name : 'Riley Joy',
 	password : 'barn'
@@ -114,5 +111,8 @@ asciiArt.add([
 	'	/C=_____________________/_/',
 	'	' 
 	]);
-
+	
+prompt.message = "";
+prompt.delimiter = "";
+prompt.start();
 passwordPrompt();
